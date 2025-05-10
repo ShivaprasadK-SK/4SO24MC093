@@ -42,16 +42,6 @@ export default function StockChart() {
           }
         );
         console.log(response.data);
-        const now = new Date();
-        const filtered = response.data.filter((item) => {
-          const itemTime = new Date(item.timeStamp);
-          return (now - itemTime) / 60000 <= selectedRange;
-        });
-        const formatted = filtered.map((item) => ({
-          time: new Date(item.timeStamp).toLocaleTimeString(),
-          price: item.price,
-        }));
-        setPriceData(calculateAverage(formatted));
       } catch (err) {
         console.error("Error fetching stock data:", err);
       } finally {
@@ -68,7 +58,6 @@ export default function StockChart() {
         Stock Chart - {selectedStock.ticker}
       </h2>
 
-      {/* Time Range Selector */}
       <div className="flex gap-2 mb-4">
         {timeRanges.map((min) => (
           <button
